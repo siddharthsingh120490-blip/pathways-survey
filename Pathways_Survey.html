@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pathways — Parent Research Survey</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A2B4A;
+    --blue: #2E75B6;
+    --light-blue: #E8F0FA;
+    --orange: #E8622A;
+    --green: #1B5E3B;
+    --bg: #F7F5F0;
+    --white: #FFFFFF;
+    --text: #1A2B4A;
+    --muted: #6B7280;
+    --border: #DDD8D0;
+    --error: #C0392B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--navy);
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 24px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.06em;
+  }
+
+  .logo span { color: var(--orange); }
+
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .progress-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .progress-bar-outer {
+    width: 160px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .progress-bar-inner {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  /* MAIN */
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* INTRO CARD */
+  .intro-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 32px;
+    border-left: 4px solid var(--blue);
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  .intro-card h2 {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+
+  .intro-card p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #4A5568;
+  }
+
+  /* SECTION LABEL */
+  .section-label {
+    font-family: 'Syne', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--light-blue);
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border: 1px solid var(--border);
+    display: none;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .question-card.visible { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 8px;
+  }
+
+  .q-text {
+    font-family: 'Syne', sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--navy);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .q-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-style: italic;
+    margin-bottom: 16px;
+    margin-top: -10px;
+  }
+
+  /* OPTIONS */
+  .options { display: flex; flex-direction: column; gap: 10px; }
+
+  .option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 18px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+    line-height: 1.4;
+    color: #374151;
+  }
+
+  .option-label:hover {
+    border-color: var(--blue);
+    background: var(--light-blue);
+  }
+
+  .option-label input[type="radio"],
+  .option-label input[type="checkbox"] {
+    margin-top: 2px;
+    flex-shrink: 0;
+    accent-color: var(--blue);
+    width: 16px;
+    height: 16px;
+  }
+
+  .option-label.selected {
+    border-color: var(--blue);
+    background: var(--light-blue);
+    color: var(--navy);
+    font-weight: 500;
+  }
+
+  /* TEXT INPUT */
+  .text-input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--navy);
+    transition: border-color 0.2s;
+    background: #FAFAF8;
+  }
+
+  .text-input:focus {
+    outline: none;
+    border-color: var(--blue);
+    background: var(--white);
+  }
+
+  /* SCALE */
+  .scale-wrap { display: flex; flex-direction: column; gap: 12px; }
+
+  .scale-numbers {
+    display: flex;
+    gap: 6px;
+  }
+
+  .scale-btn {
+    flex: 1;
+    padding: 12px 4px;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: var(--white);
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--muted);
+    text-align: center;
+  }
+
+  .scale-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .scale-btn.selected { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+  .scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* NAV BUTTONS */
+  .nav-wrap {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+    justify-content: flex-end;
+  }
+
+  .btn {
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    text-transform: uppercase;
+  }
+
+  .btn-primary {
+    background: var(--navy);
+    color: #fff;
+  }
+
+  .btn-primary:hover { background: var(--blue); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--navy);
+    border: 1.5px solid var(--border);
+  }
+
+  .btn-secondary:hover { border-color: var(--navy); }
+
+  .btn-submit {
+    background: var(--green);
+    color: #fff;
+  }
+
+  .btn-submit:hover { background: #145230; }
+
+  /* ERROR */
+  .error-msg {
+    color: var(--error);
+    font-size: 13px;
+    margin-top: 8px;
+    display: none;
+  }
+
+  /* DISQUALIFIED */
+  .disqualified-screen, .thankyou-screen {
+    display: none;
+    text-align: center;
+    padding: 80px 40px;
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  }
+
+  .disqualified-screen.visible, .thankyou-screen.visible { display: block; }
+
+  .screen-icon { font-size: 56px; margin-bottom: 24px; }
+
+  .screen-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 16px;
+  }
+
+  .screen-text {
+    font-size: 16px;
+    line-height: 1.75;
+    color: #4A5568;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* SURVEY WRAP */
+  #survey-wrap { display: none; }
+  #survey-wrap.visible { display: block; }
+  #screener-wrap { display: block; }
+  #screener-wrap.hidden { display: none; }
+
+  @media (max-width: 600px) {
+    .header { padding: 16px 20px; }
+    .progress-wrap { display: none; }
+    .container { padding: 24px 16px 60px; }
+    .intro-card { padding: 24px 20px; }
+    .question-card { padding: 24px 20px; }
+    .scale-btn { padding: 10px 2px; font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">PATH<span>WAYS</span></div>
+  <div class="progress-wrap">
+    <span class="progress-label">Progress</span>
+    <div class="progress-bar-outer">
+      <div class="progress-bar-inner" id="progressBar"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- SCREENER -->
+  <div id="screener-wrap">
+    <div class="intro-card">
+      <h2>Hi! Before we begin —</h2>
+      <p>My name is Siddharth and I am a parent just like you. I am working on a platform to help parents in Pune navigate their child's education journey more easily. This screener takes under 2 minutes. If you qualify, a detailed survey follows. Thank you for your time.</p>
+    </div>
+
+    <!-- S1 -->
+    <div class="question-card visible" id="s1">
+      <div class="q-number">Screener — S1</div>
+      <div class="q-text">What is your full name?</div>
+      <input type="text" class="text-input" id="s1_answer" placeholder="Enter your full name">
+      <div class="error-msg" id="s1_error">Please enter your name to continue.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-primary" onclick="nextScreener('s1', 's2')">Continue</button>
+      </div>
+    </div>
+
+    <!-- S2 -->
+    <div class="question-card" id="s2">
+      <div class="q-number">Screener — S2</div>
+      <div class="q-text">Are you a parent or guardian of a child?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="s2" value="Yes"> Yes</label>
+        <label class="option-label"><input type="radio" name="s2" value="No"> No</label>
+      </div>
+      <div class="error-msg" id="s2_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevScreener('s2','s1')">Back</button>
+        <button class="btn btn-primary" onclick="handleS2()">Continue</button>
+      </div>
+    </div>
+
+    <!-- S3 -->
+    <div class="question-card" id="s3">
+      <div class="q-number">Screener — S3</div>
+      <div class="q-text">What is the age of your child? If you have multiple children, consider the youngest.</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="s3" value="0-3"> 0 to 3 years</label>
+        <label class="option-label"><input type="radio" name="s3" value="4-6"> 4 to 6 years</label>
+        <label class="option-label"><input type="radio" name="s3" value="7-12"> 7 to 12 years</label>
+        <label class="option-label"><input type="radio" name="s3" value="13-18"> 13 to 18 years</label>
+        <label class="option-label"><input type="radio" name="s3" value="Above 18"> Above 18 years</label>
+      </div>
+      <div class="error-msg" id="s3_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevScreener('s3','s2')">Back</button>
+        <button class="btn btn-primary" onclick="handleS3()">Continue</button>
+      </div>
+    </div>
+
+    <!-- S4 -->
+    <div class="question-card" id="s4">
+      <div class="q-number">Screener — S4</div>
+      <div class="q-text">Which area of Pune do you currently reside in?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="s4" value="Undri/Kondhwa"> Undri / Kondhwa / Mohammadwadi</label>
+        <label class="option-label"><input type="radio" name="s4" value="Hadapsar/Magarpatta"> Hadapsar / Magarpatta / Kharadi</label>
+        <label class="option-label"><input type="radio" name="s4" value="Kothrud/Bavdhan"> Kothrud / Bavdhan / Warje</label>
+        <label class="option-label"><input type="radio" name="s4" value="Wakad/Hinjewadi"> Wakad / Hinjewadi / Baner</label>
+        <label class="option-label"><input type="radio" name="s4" value="Aundh"> Aundh / Bund Garden / Shivajinagar</label>
+        <label class="option-label"><input type="radio" name="s4" value="Other Pune"> Other area within Pune</label>
+        <label class="option-label"><input type="radio" name="s4" value="Outside Pune"> Outside Pune</label>
+      </div>
+      <div class="error-msg" id="s4_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevScreener('s4','s3')">Back</button>
+        <button class="btn btn-primary" onclick="handleS4()">Continue</button>
+      </div>
+    </div>
+
+    <!-- S5 -->
+    <div class="question-card" id="s5">
+      <div class="q-number">Screener — S5</div>
+      <div class="q-text">Are you currently involved in any of the following?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="s5" value="Playschool"> Searching for a playschool or nursery for my child</label>
+        <label class="option-label"><input type="checkbox" name="s5" value="Researching"> Researching schools or education boards</label>
+        <label class="option-label"><input type="checkbox" name="s5" value="Extracurricular"> Looking for extracurricular activities for my child</label>
+        <label class="option-label"><input type="checkbox" name="s5" value="Planning"> Planning for upcoming school admission</label>
+        <label class="option-label"><input type="checkbox" name="s5" value="Completed"> Have recently completed school admission</label>
+        <label class="option-label"><input type="checkbox" name="s5" value="None" id="s5_none"> None of the above</label>
+      </div>
+      <div class="error-msg" id="s5_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevScreener('s5','s4')">Back</button>
+        <button class="btn btn-primary" onclick="handleS5()">Continue</button>
+      </div>
+    </div>
+
+    <!-- S6 -->
+    <div class="question-card" id="s6">
+      <div class="q-number">Screener — S6</div>
+      <div class="q-text">How comfortable are you using mobile apps or websites to find information?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="s6" value="Very comfortable"> Very comfortable — I use them daily</label>
+        <label class="option-label"><input type="radio" name="s6" value="Comfortable"> Comfortable — I use them regularly</label>
+        <label class="option-label"><input type="radio" name="s6" value="Somewhat"> Somewhat comfortable — I use them occasionally</label>
+        <label class="option-label"><input type="radio" name="s6" value="Not comfortable"> Not comfortable — I prefer asking people directly</label>
+      </div>
+      <div class="error-msg" id="s6_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevScreener('s6','s5')">Back</button>
+        <button class="btn btn-primary" onclick="qualifyUser()">Start Survey</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DISQUALIFIED -->
+  <div class="disqualified-screen" id="disqualified">
+    <div class="screen-icon">🙏</div>
+    <div class="screen-title">Thank You</div>
+    <p class="screen-text">Thank you for your interest. This survey is currently focused on parents with young children actively navigating education decisions in Pune. We appreciate your time.</p>
+  </div>
+
+  <!-- MAIN SURVEY -->
+  <div id="survey-wrap">
+    <div class="intro-card">
+      <h2>Thank you for qualifying!</h2>
+      <p>This survey covers four areas — school selection, parent community, extracurricular activities, and school resources. Your honest answers will directly shape what we build. There are no right or wrong answers.</p>
+    </div>
+
+    <!-- ================================ -->
+    <!-- OBJECTIVE 1 -->
+    <!-- ================================ -->
+    <div class="section-label" id="sec1_label" style="display:none">Objective 1 — School & Curriculum Selection</div>
+
+    <!-- Q1 -->
+    <div class="question-card" id="q1">
+      <div class="q-number">Question 1</div>
+      <div class="q-text">At what stage do you think parents should start thinking about school admission for their child?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q1" value="2+ years"> More than 2 years before admission</label>
+        <label class="option-label"><input type="radio" name="q1" value="1-2 years"> 1 to 2 years before admission</label>
+        <label class="option-label"><input type="radio" name="q1" value="6-12 months"> 6 to 12 months before admission</label>
+        <label class="option-label"><input type="radio" name="q1" value="< 6 months"> Less than 6 months before admission</label>
+        <label class="option-label"><input type="radio" name="q1" value="When ready"> When the child shows readiness</label>
+      </div>
+      <div class="error-msg" id="q1_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-primary" onclick="nextQ('q1','q1a')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q1a -->
+    <div class="question-card" id="q1a">
+      <div class="q-number">Question 1a</div>
+      <div class="q-text">Have you already started or completed the school selection process for your child?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q1a" value="Completed"> Yes, already completed admission</label>
+        <label class="option-label"><input type="radio" name="q1a" value="In process"> Yes, currently in the process</label>
+        <label class="option-label"><input type="radio" name="q1a" value="Planning"> No, but planning to start soon</label>
+        <label class="option-label"><input type="radio" name="q1a" value="Too early"> No, it is too early for us</label>
+      </div>
+      <div class="error-msg" id="q1a_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q1a','q1')">Back</button>
+        <button class="btn btn-primary" onclick="handleQ1a()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q1b -->
+    <div class="question-card" id="q1b">
+      <div class="q-number">Question 1b</div>
+      <div class="q-text">Looking back at your school selection experience so far, how would you describe it overall?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q1b" value="Very smooth"> Very smooth — I found what I needed easily</label>
+        <label class="option-label"><input type="radio" name="q1b" value="Manageable"> Manageable but time consuming</label>
+        <label class="option-label"><input type="radio" name="q1b" value="Confusing"> Confusing and overwhelming</label>
+        <label class="option-label"><input type="radio" name="q1b" value="Frustrating"> Frustrating — still not confident in my decision</label>
+        <label class="option-label"><input type="radio" name="q1b" value="Rushed"> I made a rushed decision due to lack of information</label>
+      </div>
+      <div class="error-msg" id="q1b_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q1b','q1a')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q1b','q2')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q2 -->
+    <div class="question-card" id="q2">
+      <div class="q-number">Question 2</div>
+      <div class="q-text">When looking for schools, which sources do you think would be or were most helpful?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q2" value="Google"> Google Search</label>
+        <label class="option-label"><input type="checkbox" name="q2" value="School websites"> School websites</label>
+        <label class="option-label"><input type="checkbox" name="q2" value="WhatsApp"> WhatsApp parent groups</label>
+        <label class="option-label"><input type="checkbox" name="q2" value="Instagram/Facebook"> Instagram or Facebook</label>
+        <label class="option-label"><input type="checkbox" name="q2" value="Word of mouth"> Word of mouth from neighbours or colleagues</label>
+        <label class="option-label"><input type="checkbox" name="q2" value="JustDial"> JustDial or similar listing platforms</label>
+        <label class="option-label"><input type="checkbox" name="q2" value="Consultants"> Education consultants or advisors</label>
+      </div>
+      <div class="error-msg" id="q2_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q2','q1a')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q2','q3',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q3 -->
+    <div class="question-card" id="q3">
+      <div class="q-number">Question 3</div>
+      <div class="q-text">How reliable do you think these sources are or were for making a school decision?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q3" value="Very reliable"> Very reliable — I trust them completely</label>
+        <label class="option-label"><input type="radio" name="q3" value="Somewhat reliable"> Somewhat reliable — useful but need verification</label>
+        <label class="option-label"><input type="radio" name="q3" value="Neutral"> Neutral — mixed experience</label>
+        <label class="option-label"><input type="radio" name="q3" value="Somewhat unreliable"> Somewhat unreliable — hard to verify</label>
+        <label class="option-label"><input type="radio" name="q3" value="Very unreliable"> Very unreliable — too much conflicting information</label>
+      </div>
+      <div class="error-msg" id="q3_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q3','q2')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q3','q4')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q4 -->
+    <div class="question-card" id="q4">
+      <div class="q-number">Question 4</div>
+      <div class="q-text">How well do you currently understand the differences between CBSE, ICSE, and State Board?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q4" value="Very clear"> I understand them very clearly</label>
+        <label class="option-label"><input type="radio" name="q4" value="Basic"> I have a basic understanding</label>
+        <label class="option-label"><input type="radio" name="q4" value="Confused"> I am confused between them</label>
+        <label class="option-label"><input type="radio" name="q4" value="No understanding"> I have no understanding at all</label>
+      </div>
+      <div class="error-msg" id="q4_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q4','q3')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q4','q4a')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q4a -->
+    <div class="question-card" id="q4a">
+      <div class="q-number">Question 4a</div>
+      <div class="q-text">How did you or do you plan to understand the differences between education boards?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q4a" value="Online research"> Researched online independently</label>
+        <label class="option-label"><input type="checkbox" name="q4a" value="Other parents"> Asked other parents</label>
+        <label class="option-label"><input type="checkbox" name="q4a" value="School directly"> Consulted a school directly</label>
+        <label class="option-label"><input type="checkbox" name="q4a" value="Education advisor"> Spoke to an education advisor</label>
+        <label class="option-label"><input type="checkbox" name="q4a" value="Still figuring"> Still figuring it out</label>
+        <label class="option-label"><input type="checkbox" name="q4a" value="Not thought"> Have not thought about it yet</label>
+      </div>
+      <div class="error-msg" id="q4a_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q4a','q4')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q4a','q5',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q5 -->
+    <div class="question-card" id="q5">
+      <div class="q-number">Question 5</div>
+      <div class="q-text">Which factors are or will be most important to you when selecting a school?</div>
+      <div class="q-note">Select top 3</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q5" value="Distance"> Distance from home</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Fees"> School fees</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Board"> Education board — CBSE, ICSE, or State</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Infrastructure"> Infrastructure and facilities</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Teachers"> Teacher quality and reputation</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Results"> Past academic results — 10th and 12th</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Extracurricular"> Extracurricular opportunities</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Medium"> Medium of instruction — English, Marathi, Hindi</label>
+        <label class="option-label"><input type="checkbox" name="q5" value="Reviews"> Peer reviews from other parents</label>
+      </div>
+      <div class="error-msg" id="q5_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q5','q4a')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q5','q6',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q6 -->
+    <div class="question-card" id="q6">
+      <div class="q-number">Question 6</div>
+      <div class="q-text">How important is physically visiting a school before making an admission decision?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q6" value="Extremely important"> Extremely important — must visit before deciding</label>
+        <label class="option-label"><input type="radio" name="q6" value="Important not mandatory"> Important but not mandatory</label>
+        <label class="option-label"><input type="radio" name="q6" value="Neutral"> Neutral — depends on other factors</label>
+        <label class="option-label"><input type="radio" name="q6" value="Not important"> Not important — other information is enough</label>
+        <label class="option-label"><input type="radio" name="q6" value="Not sure"> Not sure yet</label>
+      </div>
+      <div class="error-msg" id="q6_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q6','q5')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q6','q7')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q7 -->
+    <div class="question-card" id="q7">
+      <div class="q-number">Question 7</div>
+      <div class="q-text">What do you think is or would be the most frustrating part of the school selection process?</div>
+      <div class="q-note">Select top 2</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q7" value="Scattered info"> Too much scattered information online</label>
+        <label class="option-label"><input type="checkbox" name="q7" value="No comparison"> No reliable way to compare schools</label>
+        <label class="option-label"><input type="checkbox" name="q7" value="Board confusion"> Not knowing which board is right for my child</label>
+        <label class="option-label"><input type="checkbox" name="q7" value="Reputation"> Understanding school reputation without insider knowledge</label>
+        <label class="option-label"><input type="checkbox" name="q7" value="Busy schedule"> Managing school visits with a busy schedule</label>
+        <label class="option-label"><input type="checkbox" name="q7" value="No reviews"> Lack of honest parent reviews</label>
+        <label class="option-label"><input type="checkbox" name="q7" value="No questions"> Not knowing what questions to even ask</label>
+      </div>
+      <div class="error-msg" id="q7_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q7','q6')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q7','q8',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q8 -->
+    <div class="question-card" id="q8">
+      <div class="q-number">Question 8 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how important is it to have a single platform to discover, compare, and review schools near your area?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q8"></div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+      </div>
+      <div class="error-msg" id="q8_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q8','q7')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q8','q9')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q9 -->
+    <div class="question-card" id="q9">
+      <div class="q-number">Question 9 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how satisfied are you with the tools and sources currently available for school selection?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q9"></div>
+        <div class="scale-labels"><span>Very unsatisfied</span><span>Very satisfied</span></div>
+      </div>
+      <div class="error-msg" id="q9_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q9','q8')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q9','q10')">Continue</button>
+      </div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- OBJECTIVE 2 -->
+    <!-- ================================ -->
+    <div class="section-label" id="sec2_label" style="display:none">Objective 2 — Community & Peer Influence</div>
+
+    <!-- Q10 -->
+    <div class="question-card" id="q10">
+      <div class="q-number">Question 10</div>
+      <div class="q-text">How important do you think connecting with other local parents is when making education decisions?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q10" value="Extremely important"> Extremely important — it is my primary source</label>
+        <label class="option-label"><input type="radio" name="q10" value="Very important"> Very important — I use it alongside other sources</label>
+        <label class="option-label"><input type="radio" name="q10" value="Somewhat important"> Somewhat important — one of many inputs</label>
+        <label class="option-label"><input type="radio" name="q10" value="Not very important"> Not very important — I prefer independent research</label>
+        <label class="option-label"><input type="radio" name="q10" value="Not important"> Not important at all</label>
+      </div>
+      <div class="error-msg" id="q10_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q10','q9')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q10','q11')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q11 -->
+    <div class="question-card" id="q11">
+      <div class="q-number">Question 11</div>
+      <div class="q-text">Are you currently part of any parent communities or groups related to your child's education?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q11" value="WhatsApp neighbourhood"> WhatsApp neighbourhood groups</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="School groups"> School parent groups</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Facebook"> Facebook parenting groups</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Instagram"> Instagram parenting communities</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="Society groups"> Housing society groups</label>
+        <label class="option-label"><input type="checkbox" name="q11" value="None" id="q11_none"> Not part of any group currently</label>
+      </div>
+      <div class="error-msg" id="q11_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q11','q10')">Back</button>
+        <button class="btn btn-primary" onclick="handleQ11()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q11a -->
+    <div class="question-card" id="q11a">
+      <div class="q-number">Question 11a</div>
+      <div class="q-text">How useful do you find these groups for making education decisions?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q11a" value="Extremely useful"> Extremely useful — I get great insights</label>
+        <label class="option-label"><input type="radio" name="q11a" value="Somewhat useful"> Somewhat useful — but a lot of noise</label>
+        <label class="option-label"><input type="radio" name="q11a" value="Neutral"> Neutral — sometimes helpful, sometimes not</label>
+        <label class="option-label"><input type="radio" name="q11a" value="Not very useful"> Not very useful — too chaotic</label>
+        <label class="option-label"><input type="radio" name="q11a" value="Not useful"> Not useful at all</label>
+      </div>
+      <div class="error-msg" id="q11a_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q11a','q11')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q11a','q12')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q12 -->
+    <div class="question-card" id="q12">
+      <div class="q-number">Question 12</div>
+      <div class="q-text">Have you ever made or do you think you would make an education decision based on another parent's recommendation?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q12" value="Yes worked"> Yes, already have and it worked well</label>
+        <label class="option-label"><input type="radio" name="q12" value="Yes not worked"> Yes, already have but it did not work as expected</label>
+        <label class="option-label"><input type="radio" name="q12" value="Would consider"> Have not yet but would consider it</label>
+        <label class="option-label"><input type="radio" name="q12" value="Alongside"> Would consider it alongside other research</label>
+        <label class="option-label"><input type="radio" name="q12" value="No"> No, I would not rely on other parents for this</label>
+      </div>
+      <div class="error-msg" id="q12_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q12','q11')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q12','q13')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q13 -->
+    <div class="question-card" id="q13">
+      <div class="q-number">Question 13</div>
+      <div class="q-text">Whose recommendation would you trust most when selecting a school?</div>
+      <div class="q-note">Select top 2</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q13" value="Same neighbourhood"> A parent from the same neighbourhood</label>
+        <label class="option-label"><input type="checkbox" name="q13" value="Current school parent"> A parent whose child is currently in that school</label>
+        <label class="option-label"><input type="checkbox" name="q13" value="Graduated parent"> A parent whose child has graduated from that school</label>
+        <label class="option-label"><input type="checkbox" name="q13" value="Colleague/friend"> A colleague or friend regardless of location</label>
+        <label class="option-label"><input type="checkbox" name="q13" value="Education consultant"> An education consultant</label>
+        <label class="option-label"><input type="checkbox" name="q13" value="Online reviews"> Online reviews from unknown parents</label>
+      </div>
+      <div class="error-msg" id="q13_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q13','q12')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q13','q14',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q14 -->
+    <div class="question-card" id="q14">
+      <div class="q-number">Question 14</div>
+      <div class="q-text">Have you ever felt unsupported or unsure when making an important education decision for your child?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q14" value="Yes very often"> Yes, very often</label>
+        <label class="option-label"><input type="radio" name="q14" value="Yes sometimes"> Yes, sometimes</label>
+        <label class="option-label"><input type="radio" name="q14" value="Rarely"> Rarely</label>
+        <label class="option-label"><input type="radio" name="q14" value="No"> No, I always have enough support around me</label>
+      </div>
+      <div class="error-msg" id="q14_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q14','q13')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q14','q15')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q15 -->
+    <div class="question-card" id="q15">
+      <div class="q-number">Question 15</div>
+      <div class="q-text">What kind of support would you value most from a local parent community?</div>
+      <div class="q-note">Select top 3</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q15" value="School reviews"> Honest school reviews and feedback</label>
+        <label class="option-label"><input type="checkbox" name="q15" value="Board advice"> Advice on choosing the right education board</label>
+        <label class="option-label"><input type="checkbox" name="q15" value="Extracurricular reco"> Extracurricular activity recommendations</label>
+        <label class="option-label"><input type="checkbox" name="q15" value="Shared experiences"> Shared experiences from parents ahead in the journey</label>
+        <label class="option-label"><input type="checkbox" name="q15" value="Emotional support"> Emotional support and reassurance</label>
+        <label class="option-label"><input type="checkbox" name="q15" value="School updates"> Local school event and admission updates</label>
+      </div>
+      <div class="error-msg" id="q15_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q15','q14')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q15','q16',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q16 -->
+    <div class="question-card" id="q16">
+      <div class="q-number">Question 16</div>
+      <div class="q-text">Would you be comfortable sharing your own experiences and reviews to help other parents?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q16" value="Yes absolutely"> Yes, absolutely — happy to contribute</label>
+        <label class="option-label"><input type="radio" name="q16" value="Yes private"> Yes, if my identity is kept private</label>
+        <label class="option-label"><input type="radio" name="q16" value="Maybe"> Maybe — depends on the platform and trust level</label>
+        <label class="option-label"><input type="radio" name="q16" value="No"> No, I prefer not to share publicly</label>
+      </div>
+      <div class="error-msg" id="q16_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q16','q15')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q16','q17')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q17 -->
+    <div class="question-card" id="q17">
+      <div class="q-number">Question 17 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how important is it to have a trusted, organised community of local parents for education decisions?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q17"></div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+      </div>
+      <div class="error-msg" id="q17_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q17','q16')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q17','q18')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q18 -->
+    <div class="question-card" id="q18">
+      <div class="q-number">Question 18 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how satisfied are you with the peer support and community resources currently available to you as a parent?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q18"></div>
+        <div class="scale-labels"><span>Very unsatisfied</span><span>Very satisfied</span></div>
+      </div>
+      <div class="error-msg" id="q18_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q18','q17')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q18','q19')">Continue</button>
+      </div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- OBJECTIVE 3 -->
+    <!-- ================================ -->
+    <div class="section-label" id="sec3_label" style="display:none">Objective 3 — Extracurricular Planning</div>
+
+    <!-- Q19 -->
+    <div class="question-card" id="q19">
+      <div class="q-number">Question 19</div>
+      <div class="q-text">Does your child currently attend any extracurricular activities?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q19" value="Multiple"> Yes, multiple activities</label>
+        <label class="option-label"><input type="radio" name="q19" value="One"> Yes, one activity</label>
+        <label class="option-label"><input type="radio" name="q19" value="Planning"> No, but planning to start soon</label>
+        <label class="option-label"><input type="radio" name="q19" value="Not considering"> No, not considering it at this stage</label>
+      </div>
+      <div class="error-msg" id="q19_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q19','q18')">Back</button>
+        <button class="btn btn-primary" onclick="handleQ19()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q19a -->
+    <div class="question-card" id="q19a">
+      <div class="q-number">Question 19a</div>
+      <div class="q-text">How did you decide on your child's current activity?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q19a" value="Child interest"> Child showed interest on their own</label>
+        <label class="option-label"><input type="checkbox" name="q19a" value="Parent reco"> Recommended by another parent</label>
+        <label class="option-label"><input type="checkbox" name="q19a" value="Nearby"> Found it nearby and convenient</label>
+        <label class="option-label"><input type="checkbox" name="q19a" value="Social media"> Saw it on social media</label>
+        <label class="option-label"><input type="checkbox" name="q19a" value="Expert"> Consulted a child development expert</label>
+        <label class="option-label"><input type="checkbox" name="q19a" value="Random"> Random choice — was not sure what else to pick</label>
+      </div>
+      <div class="error-msg" id="q19a_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q19a','q19')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q19a','q20',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q20 -->
+    <div class="question-card" id="q20">
+      <div class="q-number">Question 20</div>
+      <div class="q-text">At what age do you think children should start extracurricular activities?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q20" value="Below 2"> Below 2 years</label>
+        <label class="option-label"><input type="radio" name="q20" value="2-3"> 2 to 3 years</label>
+        <label class="option-label"><input type="radio" name="q20" value="3-5"> 3 to 5 years</label>
+        <label class="option-label"><input type="radio" name="q20" value="5-7"> 5 to 7 years</label>
+        <label class="option-label"><input type="radio" name="q20" value="Above 7"> Above 7 years</label>
+        <label class="option-label"><input type="radio" name="q20" value="Depends on child"> No specific age — depends on the child</label>
+      </div>
+      <div class="error-msg" id="q20_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q20','q19')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q20','q21')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q21 -->
+    <div class="question-card" id="q21">
+      <div class="q-number">Question 21</div>
+      <div class="q-text">How confident are you about knowing which activities are appropriate for your child's current age and developmental stage?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q21" value="Very confident"> Very confident — I have a clear framework</label>
+        <label class="option-label"><input type="radio" name="q21" value="Somewhat confident"> Somewhat confident</label>
+        <label class="option-label"><input type="radio" name="q21" value="Learning as I go"> Neutral — learning as I go</label>
+        <label class="option-label"><input type="radio" name="q21" value="Not very confident"> Not very confident — I often second guess myself</label>
+        <label class="option-label"><input type="radio" name="q21" value="Not confident"> Not confident at all — I need guidance</label>
+      </div>
+      <div class="error-msg" id="q21_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q21','q20')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q21','q22')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q22 -->
+    <div class="question-card" id="q22">
+      <div class="q-number">Question 22</div>
+      <div class="q-text">How do you currently or plan to balance academics and extracurricular activities for your child?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q22" value="Very confidently"> Very confidently — I have a clear plan</label>
+        <label class="option-label"><input type="radio" name="q22" value="Somewhat confidently"> Somewhat confidently — rough idea in place</label>
+        <label class="option-label"><input type="radio" name="q22" value="Struggle"> I struggle or expect to struggle finding the right balance</label>
+        <label class="option-label"><input type="radio" name="q22" value="School guides"> I let or will let the school guide this</label>
+        <label class="option-label"><input type="radio" name="q22" value="Not thought"> I have not thought about this yet</label>
+      </div>
+      <div class="error-msg" id="q22_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q22','q21')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q22','q23')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q23 -->
+    <div class="question-card" id="q23">
+      <div class="q-number">Question 23</div>
+      <div class="q-text">What information would most help you choose the right extracurricular activity for your child?</div>
+      <div class="q-note">Select top 3</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q23" value="Age recommendations"> Age-appropriate activity recommendations</label>
+        <label class="option-label"><input type="checkbox" name="q23" value="Teacher quals"> Teacher qualifications and experience</label>
+        <label class="option-label"><input type="checkbox" name="q23" value="Fees timing"> Fees and class timings</label>
+        <label class="option-label"><input type="checkbox" name="q23" value="Parent reviews"> Reviews from other parents</label>
+        <label class="option-label"><input type="checkbox" name="q23" value="Distance"> Distance from home</label>
+        <label class="option-label"><input type="checkbox" name="q23" value="Trial class"> Trial class availability</label>
+        <label class="option-label"><input type="checkbox" name="q23" value="Child assessment"> Child interest and personality assessment</label>
+      </div>
+      <div class="error-msg" id="q23_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q23','q22')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q23','q24',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q24 -->
+    <div class="question-card" id="q24">
+      <div class="q-number">Question 24 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how important is it to have a platform to discover and compare extracurricular activities near your area?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q24"></div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+      </div>
+      <div class="error-msg" id="q24_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q24','q23')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q24','q25')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q25 -->
+    <div class="question-card" id="q25">
+      <div class="q-number">Question 25 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how satisfied are you with how you currently find and evaluate extracurricular options for your child?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q25"></div>
+        <div class="scale-labels"><span>Very unsatisfied</span><span>Very satisfied</span></div>
+      </div>
+      <div class="error-msg" id="q25_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q25','q24')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q25','q26')">Continue</button>
+      </div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- OBJECTIVE 4 -->
+    <!-- ================================ -->
+    <div class="section-label" id="sec4_label" style="display:none">Objective 4 — Marketplace & Resources</div>
+
+    <!-- Q26 -->
+    <div class="question-card" id="q26">
+      <div class="q-number">Question 26</div>
+      <div class="q-text">As your child grows, what do you think you will do with outgrown school books, uniforms, and supplies?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q26" value="Pass to relatives"> Pass on to younger relatives</label>
+        <label class="option-label"><input type="checkbox" name="q26" value="Donate"> Donate to schools or NGOs</label>
+        <label class="option-label"><input type="checkbox" name="q26" value="Sell OLX"> Sell through OLX or Facebook Marketplace</label>
+        <label class="option-label"><input type="checkbox" name="q26" value="Store"> Store at home unused</label>
+        <label class="option-label"><input type="checkbox" name="q26" value="Discard"> Discard or throw away</label>
+        <label class="option-label"><input type="checkbox" name="q26" value="Not thought"> Have not thought about it yet</label>
+      </div>
+      <div class="error-msg" id="q26_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q26','q25')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q26','q26a',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q26a -->
+    <div class="question-card" id="q26a">
+      <div class="q-number">Question 26a</div>
+      <div class="q-text">Have you already dealt with outgrown school supplies?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q26a" value="Yes"> Yes, already have experience with this</label>
+        <label class="option-label"><input type="radio" name="q26a" value="No"> No, not yet</label>
+      </div>
+      <div class="error-msg" id="q26a_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q26a','q26')">Back</button>
+        <button class="btn btn-primary" onclick="handleQ26a()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q26b -->
+    <div class="question-card" id="q26b">
+      <div class="q-number">Question 26b</div>
+      <div class="q-text">How did you manage outgrown school supplies and how satisfied were you with that experience?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q26b" value="Sold easily"> Sold easily — very satisfied with the process</label>
+        <label class="option-label"><input type="radio" name="q26b" value="Sold hassle"> Sold but it was a hassle — took too long</label>
+        <label class="option-label"><input type="radio" name="q26b" value="Donated"> Donated — satisfied but felt I lost money</label>
+        <label class="option-label"><input type="radio" name="q26b" value="Stored"> Stored at home — not ideal but easiest option</label>
+        <label class="option-label"><input type="radio" name="q26b" value="Discarded"> Discarded — felt wasteful but had no better option</label>
+      </div>
+      <div class="error-msg" id="q26b_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q26b','q26a')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q26b','q27')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q27 -->
+    <div class="question-card" id="q27">
+      <div class="q-number">Question 27</div>
+      <div class="q-text">Have you ever bought used school books or children's items from another parent?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q27" value="Yes regularly"> Yes, regularly — very comfortable with it</label>
+        <label class="option-label"><input type="radio" name="q27" value="Yes once"> Yes, once or twice — open to doing it again</label>
+        <label class="option-label"><input type="radio" name="q27" value="No but would"> No, but would consider it</label>
+        <label class="option-label"><input type="radio" name="q27" value="No prefer new"> No, I prefer buying new items only</label>
+      </div>
+      <div class="error-msg" id="q27_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q27','q26a')">Back</button>
+        <button class="btn btn-primary" onclick="handleQ27()">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q27a -->
+    <div class="question-card" id="q27a">
+      <div class="q-number">Question 27a</div>
+      <div class="q-text">What would stop you from buying used school items from another parent?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q27a" value="Quality concern"> Concern about quality or condition of items</label>
+        <label class="option-label"><input type="checkbox" name="q27a" value="No platform"> No trusted platform to find them</label>
+        <label class="option-label"><input type="checkbox" name="q27a" value="Didnt know"> Did not know where to look</label>
+        <label class="option-label"><input type="checkbox" name="q27a" value="Hygiene"> Hygiene concerns</label>
+        <label class="option-label"><input type="checkbox" name="q27a" value="Prefer new"> Prefer new items for my child</label>
+      </div>
+      <div class="error-msg" id="q27a_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q27a','q27')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q27a','q28',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q28 -->
+    <div class="question-card" id="q28">
+      <div class="q-number">Question 28</div>
+      <div class="q-text">Which items would you be most interested in buying or selling second-hand?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q28" value="Textbooks"> School textbooks</label>
+        <label class="option-label"><input type="checkbox" name="q28" value="Stationery"> Notebooks and stationery</label>
+        <label class="option-label"><input type="checkbox" name="q28" value="Uniforms"> School uniforms</label>
+        <label class="option-label"><input type="checkbox" name="q28" value="Sports"> Sports equipment</label>
+        <label class="option-label"><input type="checkbox" name="q28" value="Instruments"> Musical instruments</label>
+        <label class="option-label"><input type="checkbox" name="q28" value="Toys"> Toys and educational games</label>
+        <label class="option-label"><input type="checkbox" name="q28" value="Bags"> School bags and accessories</label>
+      </div>
+      <div class="error-msg" id="q28_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q28','q27')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q28','q29',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q29 -->
+    <div class="question-card" id="q29">
+      <div class="q-number">Question 29</div>
+      <div class="q-text">How important is verified seller identity and trust when buying used items from other parents?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q29" value="Extremely important"> Extremely important — will not buy without it</label>
+        <label class="option-label"><input type="radio" name="q29" value="Very important"> Very important</label>
+        <label class="option-label"><input type="radio" name="q29" value="Somewhat important"> Somewhat important</label>
+        <label class="option-label"><input type="radio" name="q29" value="Not very important"> Not very important</label>
+        <label class="option-label"><input type="radio" name="q29" value="Not important"> Not important at all</label>
+      </div>
+      <div class="error-msg" id="q29_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q29','q28')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q29','q30')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q30 -->
+    <div class="question-card" id="q30">
+      <div class="q-number">Question 30</div>
+      <div class="q-text">Would you use a dedicated local marketplace within a parenting platform to buy or sell used school items?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q30" value="Yes definitely"> Yes, definitely</label>
+        <label class="option-label"><input type="radio" name="q30" value="Yes if trusted"> Yes, if the platform is trusted and easy to use</label>
+        <label class="option-label"><input type="radio" name="q30" value="Maybe"> Maybe — depends on how it works</label>
+        <label class="option-label"><input type="radio" name="q30" value="No OLX"> No, would stick to OLX or Facebook</label>
+        <label class="option-label"><input type="radio" name="q30" value="No interest"> No, not interested</label>
+      </div>
+      <div class="error-msg" id="q30_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q30','q29')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q30','q31')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q31 -->
+    <div class="question-card" id="q31">
+      <div class="q-number">Question 31 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how important is a reliable local marketplace for buying and selling used school items?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q31"></div>
+        <div class="scale-labels"><span>Not important</span><span>Extremely important</span></div>
+      </div>
+      <div class="error-msg" id="q31_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q31','q30')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q31','q32')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q32 -->
+    <div class="question-card" id="q32">
+      <div class="q-number">Question 32 — Opportunity Score</div>
+      <div class="q-text">On a scale of 1 to 10, how satisfied are you with the options currently available for buying or selling used school supplies?</div>
+      <div class="scale-wrap">
+        <div class="scale-numbers" id="scale_q32"></div>
+        <div class="scale-labels"><span>Very unsatisfied</span><span>Very satisfied</span></div>
+      </div>
+      <div class="error-msg" id="q32_error">Please select a rating.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q32','q31')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q32','q33')">Continue</button>
+      </div>
+    </div>
+
+    <!-- ================================ -->
+    <!-- CLOSING -->
+    <!-- ================================ -->
+    <div class="section-label" id="sec5_label" style="display:none">Closing — Overall Assessment</div>
+
+    <!-- Q33 -->
+    <div class="question-card" id="q33">
+      <div class="q-number">Question 33</div>
+      <div class="q-text">As a parent, which of the following challenges do you face or expect to face?</div>
+      <div class="q-note">Select all that apply</div>
+      <div class="options">
+        <label class="option-label"><input type="checkbox" name="q33" value="Finding school"> Finding the right school in my area</label>
+        <label class="option-label"><input type="checkbox" name="q33" value="Board differences"> Understanding differences between education boards</label>
+        <label class="option-label"><input type="checkbox" name="q33" value="Parent connect"> Connecting with other parents for honest advice</label>
+        <label class="option-label"><input type="checkbox" name="q33" value="Activities"> Finding the right extracurricular activities for my child</label>
+        <label class="option-label"><input type="checkbox" name="q33" value="Milestones"> Tracking what my child should be learning at each age</label>
+        <label class="option-label"><input type="checkbox" name="q33" value="Expert guidance"> Getting expert guidance on education decisions</label>
+        <label class="option-label"><input type="checkbox" name="q33" value="Marketplace"> Buying or selling used school books and supplies</label>
+      </div>
+      <div class="error-msg" id="q33_error">Please select at least one option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q33','q32')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q33','q34',true)">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q34 -->
+    <div class="question-card" id="q34">
+      <div class="q-number">Question 34</div>
+      <div class="q-text">If there was one place where all of the above was available — verified school information, local parent community, activity finder, and expert guidance — how likely are you to use it?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q34" value="Extremely likely"> Extremely likely — I need this right now</label>
+        <label class="option-label"><input type="radio" name="q34" value="Very likely"> Very likely — would definitely try it</label>
+        <label class="option-label"><input type="radio" name="q34" value="Neutral"> Neutral — depends on how good it is</label>
+        <label class="option-label"><input type="radio" name="q34" value="Unlikely"> Unlikely — I manage fine currently</label>
+        <label class="option-label"><input type="radio" name="q34" value="Very unlikely"> Very unlikely — not something I would use</label>
+      </div>
+      <div class="error-msg" id="q34_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q34','q33')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q34','q34a')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q34a -->
+    <div class="question-card" id="q34a">
+      <div class="q-number">Question 34a</div>
+      <div class="q-text">If this platform not only provided structured, verified information on schools, boards, and child development in one place — but also offered an option to connect with an education expert for one-on-one personal guidance — how valuable would that be to you?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q34a" value="Extremely valuable"> Extremely valuable — I need both the information and expert guidance</label>
+        <label class="option-label"><input type="radio" name="q34a" value="Very valuable"> Very valuable — the structured information alone would help me greatly</label>
+        <label class="option-label"><input type="radio" name="q34a" value="Somewhat valuable"> Somewhat valuable — I would use the information but may not need an expert</label>
+        <label class="option-label"><input type="radio" name="q34a" value="Not very valuable"> Not very valuable — I can find this information on my own</label>
+        <label class="option-label"><input type="radio" name="q34a" value="Not valuable"> Not valuable at all</label>
+      </div>
+      <div class="error-msg" id="q34a_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q34a','q34')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q34a','q35')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q35 -->
+    <div class="question-card" id="q35">
+      <div class="q-number">Question 35</div>
+      <div class="q-text">How much would you be willing to pay monthly for such a service if it genuinely solved these problems for you?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q35" value="Free only"> I would only use it if it is free</label>
+        <label class="option-label"><input type="radio" name="q35" value="Up to 99"> Up to Rs 99 per month</label>
+        <label class="option-label"><input type="radio" name="q35" value="100-299"> Rs 100 to Rs 299 per month</label>
+        <label class="option-label"><input type="radio" name="q35" value="300-499"> Rs 300 to Rs 499 per month</label>
+        <label class="option-label"><input type="radio" name="q35" value="500+"> Rs 500 or more per month</label>
+      </div>
+      <div class="error-msg" id="q35_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q35','q34a')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q35','q36')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q36 -->
+    <div class="question-card" id="q36">
+      <div class="q-number">Question 36</div>
+      <div class="q-text">How would you prefer to access such a service?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q36" value="App only"> Mobile app only</label>
+        <label class="option-label"><input type="radio" name="q36" value="Website only"> Website only</label>
+        <label class="option-label"><input type="radio" name="q36" value="Both"> Both mobile app and website equally</label>
+        <label class="option-label"><input type="radio" name="q36" value="WhatsApp"> WhatsApp based — no separate app needed</label>
+      </div>
+      <div class="error-msg" id="q36_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q36','q35')">Back</button>
+        <button class="btn btn-primary" onclick="nextQ('q36','q37')">Continue</button>
+      </div>
+    </div>
+
+    <!-- Q37 -->
+    <div class="question-card" id="q37">
+      <div class="q-number">Question 37</div>
+      <div class="q-text">Would you be open to a brief 15-minute follow-up conversation if we have further questions?</div>
+      <div class="options">
+        <label class="option-label"><input type="radio" name="q37" value="Yes happy"> Yes, happy to — please reach out</label>
+        <label class="option-label"><input type="radio" name="q37" value="Maybe"> Maybe — depends on timing</label>
+        <label class="option-label"><input type="radio" name="q37" value="No"> No, prefer to remain anonymous</label>
+      </div>
+      <div class="error-msg" id="q37_error">Please select an option.</div>
+      <div class="nav-wrap">
+        <button class="btn btn-secondary" onclick="prevQ('q37','q36')">Back</button>
+        <button class="btn btn-submit" onclick="submitSurvey()">Submit Survey</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- THANK YOU -->
+  <div class="thankyou-screen" id="thankyou">
+    <div class="screen-icon">🙏</div>
+    <div class="screen-title">Thank You So Much!</div>
+    <p class="screen-text">Your inputs will directly shape Pathways and help us build something that truly makes a difference for parents in Pune. We deeply appreciate your time and honest answers.</p>
+  </div>
+
+</div>
+
+<script>
+  // =============================================
+  // DATA STORE
+  // =============================================
+  const responses = {};
+  let totalQuestions = 37;
+  let currentQ = 0;
+
+  // =============================================
+  // SCALE BUILDER
+  // =============================================
+  const scaleIds = ['q8','q9','q17','q18','q24','q25','q31','q32'];
+  scaleIds.forEach(id => {
+    const wrap = document.getElementById('scale_' + id);
+    if (!wrap) return;
+    for (let i = 1; i <= 10; i++) {
+      const btn = document.createElement('button');
+      btn.className = 'scale-btn';
+      btn.textContent = i;
+      btn.type = 'button';
+      btn.onclick = () => {
+        wrap.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        responses[id] = i;
+        document.getElementById(id + '_error').style.display = 'none';
+      };
+      wrap.appendChild(btn);
+    }
+  });
+
+  // =============================================
+  // OPTION HIGHLIGHT
+  // =============================================
+  document.querySelectorAll('.option-label').forEach(label => {
+    label.addEventListener('click', () => {
+      const input = label.querySelector('input');
+      if (input.type === 'radio') {
+        const name = input.name;
+        document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+          r.closest('.option-label').classList.remove('selected');
+        });
+        label.classList.add('selected');
+      } else {
+        setTimeout(() => {
+          label.classList.toggle('selected', input.checked);
+        }, 0);
+      }
+    });
+  });
+
+  // =============================================
+  // PROGRESS
+  // =============================================
+  function updateProgress(qNum) {
+    const pct = Math.round((qNum / totalQuestions) * 100);
+    document.getElementById('progressBar').style.width = pct + '%';
+  }
+
+  // =============================================
+  // SCREENER HELPERS
+  // =============================================
+  function showScreener(id) {
+    document.querySelectorAll('#screener-wrap .question-card').forEach(c => c.classList.remove('visible'));
+    document.getElementById(id).classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextScreener(from, to) {
+    const el = document.getElementById(from + '_answer');
+    if (el && !el.value.trim()) {
+      document.getElementById(from + '_error').style.display = 'block';
+      return;
+    }
+    if (el) responses[from] = el.value.trim();
+    showScreener(to);
+  }
+
+  function prevScreener(from, to) {
+    document.getElementById(from).classList.remove('visible');
+    document.getElementById(to).classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function getRadio(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : null;
+  }
+
+  function getCheckboxes(name) {
+    return [...document.querySelectorAll(`input[name="${name}"]:checked`)].map(e => e.value);
+  }
+
+  function showError(id) {
+    document.getElementById(id + '_error').style.display = 'block';
+  }
+
+  function hideError(id) {
+    document.getElementById(id + '_error').style.display = 'none';
+  }
+
+  // =============================================
+  // SCREENER BRANCHING
+  // =============================================
+  function handleS2() {
+    const val = getRadio('s2');
+    if (!val) { showError('s2'); return; }
+    responses['s2'] = val;
+    hideError('s2');
+    if (val === 'No') { disqualify(); return; }
+    showScreener('s3');
+  }
+
+  function handleS3() {
+    const val = getRadio('s3');
+    if (!val) { showError('s3'); return; }
+    responses['s3'] = val;
+    hideError('s3');
+    if (val === 'Above 18') { disqualify(); return; }
+    showScreener('s4');
+  }
+
+  function handleS4() {
+    const val = getRadio('s4');
+    if (!val) { showError('s4'); return; }
+    responses['s4'] = val;
+    hideError('s4');
+    if (val === 'Outside Pune') { disqualify(); return; }
+    showScreener('s5');
+  }
+
+  function handleS5() {
+    const vals = getCheckboxes('s5');
+    if (vals.length === 0) { showError('s5'); return; }
+    responses['s5'] = vals;
+    hideError('s5');
+    if (vals.length === 1 && vals[0] === 'None') { disqualify(); return; }
+    showScreener('s6');
+  }
+
+  function qualifyUser() {
+    const val = getRadio('s6');
+    if (!val) { showError('s6'); return; }
+    responses['s6'] = val;
+    hideError('s6');
+    document.getElementById('screener-wrap').classList.add('hidden');
+    document.getElementById('survey-wrap').classList.add('visible');
+    showQ('q1');
+    document.getElementById('sec1_label').style.display = 'block';
+    updateProgress(1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function disqualify() {
+    document.getElementById('screener-wrap').classList.add('hidden');
+    document.getElementById('disqualified').classList.add('visible');
+    document.getElementById('progressBar').style.width = '100%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // =============================================
+  // SURVEY HELPERS
+  // =============================================
+  function showQ(id) {
+    document.querySelectorAll('#survey-wrap .question-card').forEach(c => c.classList.remove('visible'));
+    const el = document.getElementById(id);
+    if (el) { el.classList.add('visible'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  }
+
+  function nextQ(from, to, isCheckbox = false) {
+    if (isCheckbox) {
+      const vals = getCheckboxes(from);
+      if (vals.length === 0) { showError(from); return; }
+      responses[from] = vals;
+    } else {
+      const val = responses[from] !== undefined ? responses[from] : getRadio(from);
+      if (!val) { showError(from); return; }
+      responses[from] = val;
+    }
+    hideError(from);
+
+    // show section labels
+    const sectionMap = { q10: 'sec2_label', q19: 'sec3_label', q26: 'sec4_label', q33: 'sec5_label' };
+    if (sectionMap[to]) document.getElementById(sectionMap[to]).style.display = 'block';
+
+    const qNum = parseInt(to.replace(/[^0-9]/g, '')) || 0;
+    updateProgress(qNum);
+    showQ(to);
+  }
+
+  function prevQ(from, to) {
+    showQ(to);
+    const qNum = parseInt(to.replace(/[^0-9]/g, '')) || 0;
+    updateProgress(qNum);
+  }
+
+  // =============================================
+  // BRANCHING QUESTIONS
+  // =============================================
+  function handleQ1a() {
+    const val = getRadio('q1a');
+    if (!val) { showError('q1a'); return; }
+    responses['q1a'] = val;
+    hideError('q1a');
+    if (val === 'Completed' || val === 'In process') {
+      showQ('q1b');
+    } else {
+      showQ('q2');
+    }
+    updateProgress(2);
+  }
+
+  function handleQ11() {
+    const vals = getCheckboxes('q11');
+    if (vals.length === 0) { showError('q11'); return; }
+    responses['q11'] = vals;
+    hideError('q11');
+    if (vals.includes('None')) {
+      showQ('q12');
+    } else {
+      showQ('q11a');
+    }
+    updateProgress(11);
+  }
+
+  function handleQ19() {
+    const val = getRadio('q19');
+    if (!val) { showError('q19'); return; }
+    responses['q19'] = val;
+    hideError('q19');
+    document.getElementById('sec3_label').style.display = 'block';
+    if (val === 'Multiple' || val === 'One') {
+      showQ('q19a');
+    } else {
+      showQ('q20');
+    }
+    updateProgress(19);
+  }
+
+  function handleQ26a() {
+    const val = getRadio('q26a');
+    if (!val) { showError('q26a'); return; }
+    responses['q26a'] = val;
+    hideError('q26a');
+    if (val === 'Yes') {
+      showQ('q26b');
+    } else {
+      showQ('q27');
+    }
+    updateProgress(26);
+  }
+
+  function handleQ27() {
+    const val = getRadio('q27');
+    if (!val) { showError('q27'); return; }
+    responses['q27'] = val;
+    hideError('q27');
+    if (val === 'No but would' || val === 'No prefer new') {
+      showQ('q27a');
+    } else {
+      showQ('q28');
+    }
+    updateProgress(27);
+  }
+
+  // =============================================
+  // SUBMIT
+  // =============================================
+  function submitSurvey() {
+    const val = getRadio('q37');
+    if (!val) { showError('q37'); return; }
+    responses['q37'] = val;
+
+    // Build form data string for FormSubmit
+    const name = responses['s1'] || 'Anonymous';
+    let body = `Pathways Survey Response\nRespondent: ${name}\n\n`;
+    Object.entries(responses).forEach(([k, v]) => {
+      body += `${k.toUpperCase()}: ${Array.isArray(v) ? v.join(', ') : v}\n`;
+    });
+
+    // Send via FormSubmit — replace YOUR_EMAIL with actual email
+    const formData = new FormData();
+    formData.append('_subject', `Pathways Survey — ${name}`);
+    formData.append('_captcha', 'false');
+    formData.append('Response', body);
+    formData.append('Name', name);
+
+    fetch('https://formsubmit.co/YOUR_EMAIL_HERE', {
+      method: 'POST',
+      body: formData
+    }).catch(() => {}); // silent fail — still show thank you
+
+    document.getElementById('survey-wrap').style.display = 'none';
+    document.getElementById('thankyou').classList.add('visible');
+    document.getElementById('progressBar').style.width = '100%';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
