@@ -1628,15 +1628,14 @@
     if (!val) { showError('q37'); return; }
     responses['q37'] = val;
 
-    // Send to Google Sheets via Apps Script
+    // Send to Google Sheets via image tag trick (bypasses CORS completely)
     const params = new URLSearchParams();
     Object.entries(responses).forEach(([k, v]) => {
       params.append(k, Array.isArray(v) ? v.join(', ') : v);
     });
-    fetch('https://script.google.com/macros/s/AKfycbzgaXVOrDwwn13tFLtmkp2HJshNm5HX56PzKsyCCzyncR3-xMl_-4kNonLqE9Yur9k/exec?' + params.toString(), {
-      method: 'GET',
-      mode: 'no-cors'
-    }).catch(() => {}); // silent fail — still show thank you
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzPpXahAzfMJrdtl31FOIhQMKe83GwedzXrc7UGdlSN2XZiTXp7RDk7I3XRzlVFUGY/exec';
+    const img = new Image();
+    img.src = scriptURL + '?' + params.toString();
 
     document.getElementById('survey-wrap').style.display = 'none';
     document.getElementById('thankyou').classList.add('visible');
