@@ -1628,14 +1628,36 @@
     if (!val) { showError('q37'); return; }
     responses['q37'] = val;
 
-    // Send to Google Sheets via image tag trick (bypasses CORS completely)
-    const params = new URLSearchParams();
-    Object.entries(responses).forEach(([k, v]) => {
-      params.append(k, Array.isArray(v) ? v.join(', ') : v);
+    // Send to Google Sheets — split into two requests to avoid URL length limit
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyOJaU745me3gsBo8WGY_T6Wk1WIsm3Zi9L3QapoCu2hfwqv-wUC7uZU5Hug9gpx5M/exec';
+    const keys = Object.keys(responses);
+    const half = Math.ceil(keys.length / 2);
+    const part1keys = keys.slice(0, half);
+    const part2keys = keys.slice(half);
+    const ts = Date.now();
+
+    const params1 = new URLSearchParams();
+    params1.append('batch', 'part1');
+    params1.append('ts', ts);
+    part1keys.forEach(k => {
+      const v = responses[k];
+      params1.append(k, Array.isArray(v) ? v.join(', ') : v);
     });
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzPpXahAzfMJrdtl31FOIhQMKe83GwedzXrc7UGdlSN2XZiTXp7RDk7I3XRzlVFUGY/exec';
-    const img = new Image();
-    img.src = scriptURL + '?' + params.toString();
+
+    const params2 = new URLSearchParams();
+    params2.append('batch', 'part2');
+    params2.append('ts', ts);
+    part2keys.forEach(k => {
+      const v = responses[k];
+      params2.append(k, Array.isArray(v) ? v.join(', ') : v);
+    });
+
+    const img1 = new Image();
+    img1.src = scriptURL + '?' + params1.toString();
+    setTimeout(() => {
+      const img2 = new Image();
+      img2.src = scriptURL + '?' + params2.toString();
+    }, 1000);
 
     document.getElementById('survey-wrap').style.display = 'none';
     document.getElementById('thankyou').classList.add('visible');
