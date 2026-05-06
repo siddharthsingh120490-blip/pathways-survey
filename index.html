@@ -1498,13 +1498,14 @@
     hideError('s6');
     document.getElementById('screener-wrap').classList.add('hidden');
     document.getElementById('survey-wrap').classList.add('visible');
-    showQ('q1');
-setTimeout(() => {
-  document.getElementById('qualify-intro').style.display = 'none';
-}, 3000);
-    document.getElementById('sec1_label').style.display = 'block';
-    updateProgress(1);
+    document.getElementById('qualify-intro').style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      document.getElementById('qualify-intro').style.display = 'none';
+      document.getElementById('sec1_label').style.display = 'block';
+      showQ('q1');
+      updateProgress(1);
+    }, 3000);
   }
 
   function disqualify() {
@@ -1627,28 +1628,15 @@ setTimeout(() => {
     if (!val) { showError('q37'); return; }
     responses['q37'] = val;
 
-    // Build form data string for FormSubmit
-    const name = responses['s1'] || 'Anonymous';
-    let body = `Pathways Survey Response\nRespondent: ${name}\n\n`;
-    Object.entries(responses).forEach(([k, v]) => {
-      body += `${k.toUpperCase()}: ${Array.isArray(v) ? v.join(', ') : v}\n`;
-    });
-
-    // Send via FormSubmit — replace YOUR_EMAIL with actual email
-    const formData = new FormData();
-    formData.append('_subject', `Pathways Survey — ${name}`);
-    formData.append('_captcha', 'false');
-    formData.append('Response', body);
-    formData.append('Name', name);
-
+    // Send to Google Sheets via Apps Script
     const params = new URLSearchParams();
-Object.entries(responses).forEach(([k, v]) => {
-  params.append(k, Array.isArray(v) ? v.join(', ') : v);
-});
-fetch('https://script.google.com/macros/s/AKfycbx57vaoBXrDisVnHc9bM4IQB_i1m3Lt8mfND41QXBy7VVMm_nWFOocqLIfx5z943TQ/exec' + params.toString(), {
-  method: 'GET',
-  mode: 'no-cors'
-}).catch(() => {}); // silent fail — still show thank you
+    Object.entries(responses).forEach(([k, v]) => {
+      params.append(k, Array.isArray(v) ? v.join(', ') : v);
+    });
+    fetch('https://script.google.com/macros/s/AKfycbzgaXVOrDwwn13tFLtmkp2HJshNm5HX56PzKsyCCzyncR3-xMl_-4kNonLqE9Yur9k/exec?' + params.toString(), {
+      method: 'GET',
+      mode: 'no-cors'
+    }).catch(() => {}); // silent fail — still show thank you
 
     document.getElementById('survey-wrap').style.display = 'none';
     document.getElementById('thankyou').classList.add('visible');
