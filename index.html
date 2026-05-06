@@ -372,7 +372,7 @@
   <div id="screener-wrap">
     <div class="intro-card">
       <h2>Hi! Before we begin —</h2>
-      <p>My name is Siddharth and I am a parent just like you. I am working on a platform to help parents in Pune navigate their child's education journey more easily. This screener takes under 2 minutes. If you qualify, a detailed survey follows. Thank you for your time.</p>
+<p>We are building Pathways — a platform to help parents in Pune navigate their child's education journey. Before we get to the survey, we have a few quick questions to make sure this is relevant to you. Takes under 2 minutes. Thank you for your time.</p>
     </div>
 
     <!-- S1 -->
@@ -486,8 +486,8 @@
 
   <!-- MAIN SURVEY -->
   <div id="survey-wrap">
-    <div class="intro-card">
-      <h2>Thank you for qualifying!</h2>
+    <div class="intro-card" id="qualify-intro">
+      <h2>You're all set!</h2>
       <p>This survey covers four areas — school selection, parent community, extracurricular activities, and school resources. Your honest answers will directly shape what we build. There are no right or wrong answers.</p>
     </div>
 
@@ -607,15 +607,15 @@
     <!-- Q4a -->
     <div class="question-card" id="q4a">
       <div class="q-number">Question 4a</div>
-      <div class="q-text">How did you or do you plan to understand the differences between education boards?</div>
-      <div class="q-note">Select all that apply</div>
-      <div class="options">
-        <label class="option-label"><input type="checkbox" name="q4a" value="Online research"> Researched online independently</label>
-        <label class="option-label"><input type="checkbox" name="q4a" value="Other parents"> Asked other parents</label>
-        <label class="option-label"><input type="checkbox" name="q4a" value="School directly"> Consulted a school directly</label>
-        <label class="option-label"><input type="checkbox" name="q4a" value="Education advisor"> Spoke to an education advisor</label>
-        <label class="option-label"><input type="checkbox" name="q4a" value="Still figuring"> Still figuring it out</label>
-        <label class="option-label"><input type="checkbox" name="q4a" value="Not thought"> Have not thought about it yet</label>
+      <div class="q-text">How are you planning to or how did you understand the differences between education boards?</div>
+<div class="q-note">Select all that apply</div>
+<div class="options">
+  <label class="option-label"><input type="checkbox" name="q4a" value="Online research"> Will research or have researched online independently</label>
+  <label class="option-label"><input type="checkbox" name="q4a" value="Other parents"> Will ask or have asked other parents</label>
+  <label class="option-label"><input type="checkbox" name="q4a" value="School directly"> Will consult or have consulted a school directly</label>
+  <label class="option-label"><input type="checkbox" name="q4a" value="Education advisor"> Will speak or have spoken to an education advisor</label>
+  <label class="option-label"><input type="checkbox" name="q4a" value="Still figuring"> Still figuring it out</label>
+  <label class="option-label"><input type="checkbox" name="q4a" value="Not thought"> Have not thought about it yet</label>
       </div>
       <div class="error-msg" id="q4a_error">Please select at least one option.</div>
       <div class="nav-wrap">
@@ -1499,6 +1499,9 @@
     document.getElementById('screener-wrap').classList.add('hidden');
     document.getElementById('survey-wrap').classList.add('visible');
     showQ('q1');
+setTimeout(() => {
+  document.getElementById('qualify-intro').style.display = 'none';
+}, 3000);
     document.getElementById('sec1_label').style.display = 'block';
     updateProgress(1);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1638,10 +1641,13 @@
     formData.append('Response', body);
     formData.append('Name', name);
 
-    fetch('https://script.google.com/macros/s/AKfycbzgaXVOrDwwn13tFLtmkp2HJshNm5HX56PzKsyCCzyncR3-xMl_-4kNonLqE9Yur9k/exec', {
-  method: 'POST',
-  body: JSON.stringify(responses),
-  headers: { 'Content-Type': 'application/json' }
+    const params = new URLSearchParams();
+Object.entries(responses).forEach(([k, v]) => {
+  params.append(k, Array.isArray(v) ? v.join(', ') : v);
+});
+fetch('https://script.google.com/macros/s/AKfycbx57vaoBXrDisVnHc9bM4IQB_i1m3Lt8mfND41QXBy7VVMm_nWFOocqLIfx5z943TQ/exec' + params.toString(), {
+  method: 'GET',
+  mode: 'no-cors'
 }).catch(() => {}); // silent fail — still show thank you
 
     document.getElementById('survey-wrap').style.display = 'none';
